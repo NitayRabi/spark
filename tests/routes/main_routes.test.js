@@ -8,7 +8,7 @@ var User = require('../../models/user').User;
 var knex = require('../../libs/db').knex;
 
 describe('Main routes', function() {
-    this.timeout(30000);
+    this.timeout(5000);
     it('responds to / with redirect to hebrew', function testSlash(done) {
         request
             .get('/')
