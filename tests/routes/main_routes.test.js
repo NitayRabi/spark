@@ -8,7 +8,7 @@ var User = require('../../models/user').User;
 var knex = require('../../libs/db').knex;
 
 describe('Main routes', function() {
-    this.timeout(5000);
+    this.timeout(30000);
     it('responds to / with redirect to hebrew', function testSlash(done) {
         request
             .get('/')
@@ -80,11 +80,16 @@ describe('Main routes', function() {
                     .post('/he/login')
                     .send({
                         email: email,
-                        password: clear_password
+                        password: clear_password,
+                        r:'home'
                     })
-                    .expect(302)
-                    .expect('Location', 'home');
+                    .expect(200)
+                    // .expect('Location', 'home');
             }).then(function() {
+                User.forge({
+                    email: email,
+                    password: 'abcdefghijklmnopqrstuvwxyz'
+                }).save();
                 // spark user should be updated with email and password
                 return User.forge({
                     email: email
